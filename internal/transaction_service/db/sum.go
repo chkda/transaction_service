@@ -7,7 +7,7 @@ type SumResult struct {
 	Sum float64 `db:"Sum"`
 }
 
-func (h *Handler) FetchSumForTransactionId(ctx context.Context, id uint32) (*SumResult, error) {
+func (h *Handler) FetchSumForTransactionId(ctx context.Context, id int32) (*SumResult, error) {
 	query := "SELECT Id, SUM(Amount) AS SUM FROM " + TRANSACTION_TABLE + " WHERE Id IN (?) "
 	args := []interface{}{id}
 	rows, err := h.readerWriter.Read(ctx, query, args)

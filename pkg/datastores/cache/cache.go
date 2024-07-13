@@ -18,3 +18,8 @@ type Writer interface {
 type Reader interface {
 	Read(context.Context, string) ([]byte, error)
 }
+
+type ReaderWriter interface {
+	Reader
+	Writer
+}
