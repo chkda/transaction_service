@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/chkda/transaction_service/internal/transaction_service/db"
-	"github.com/chkda/transaction_service/internal/transaction_service/interfaces/transactions"
+	"github.com/chkda/transaction_service/internal/db"
+	"github.com/chkda/transaction_service/internal/interfaces/transactions"
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
 )
 

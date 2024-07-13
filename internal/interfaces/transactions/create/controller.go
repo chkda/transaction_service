@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/chkda/transaction_service/internal/transaction_service/app"
+	"github.com/chkda/transaction_service/internal/app"
 	"github.com/labstack/echo/v4"
 )
 

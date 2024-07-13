@@ -1,16 +1,16 @@
-package transaction_service
+package service
 
 import (
 	"encoding/json"
 	"io"
 	"os"
 
-	"github.com/chkda/transaction_service/internal/transaction_service/app"
-	"github.com/chkda/transaction_service/internal/transaction_service/interfaces/healthcheck"
-	"github.com/chkda/transaction_service/internal/transaction_service/interfaces/sum"
-	"github.com/chkda/transaction_service/internal/transaction_service/interfaces/transactions/create"
-	"github.com/chkda/transaction_service/internal/transaction_service/interfaces/transactions/read"
-	typ "github.com/chkda/transaction_service/internal/transaction_service/interfaces/types"
+	"github.com/chkda/transaction_service/internal/app"
+	"github.com/chkda/transaction_service/internal/interfaces/healthcheck"
+	"github.com/chkda/transaction_service/internal/interfaces/sum"
+	"github.com/chkda/transaction_service/internal/interfaces/transactions/create"
+	"github.com/chkda/transaction_service/internal/interfaces/transactions/read"
+	typ "github.com/chkda/transaction_service/internal/interfaces/types"
 	badgercache "github.com/chkda/transaction_service/pkg/datastores/cache/badger"
 	rediscache "github.com/chkda/transaction_service/pkg/datastores/cache/redis"
 	"github.com/chkda/transaction_service/pkg/datastores/database/mysqlstore"

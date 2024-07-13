@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/chkda/transaction_service/internal/transaction_service/db"
+	"github.com/chkda/transaction_service/internal/db"
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
 	"github.com/chkda/transaction_service/pkg/datastores/database"
 )
