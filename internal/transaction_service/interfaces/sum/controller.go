@@ -1,4 +1,4 @@
-package types
+package sum
 
 import (
 	"errors"
@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	route = "/types/:type"
+	route = "/sum/:parent_id"
 )
 
 var (
-	ErrReadingInputType = errors.New("unable to read input type")
+	ErrReadingInputId = errors.New("unable to read input id")
 )
 
 type Controller struct {
@@ -27,10 +27,10 @@ func (c *Controller) GetRoute() string {
 }
 
 func (c *Controller) Handler(e echo.Context) error {
-	inpType := e.Param("type")
+	parentId := e.Param("parent_id")
 	response := &Response{}
-	if inpType == "" {
-		response.Message = ErrReadingInputType.Error()
+	if parentId == "" {
+		response.Message = ErrReadingInputId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	// TODO: Add logic

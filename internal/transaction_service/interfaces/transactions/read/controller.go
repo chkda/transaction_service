@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	route = "/transactions/"
+	route = "/transactions/:txn_id"
 )
 
 var (
