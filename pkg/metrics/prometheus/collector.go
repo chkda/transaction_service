@@ -6,5 +6,5 @@ type Collector struct {
 }
 
 // func New(config *Config) *Collector {
-// 	counterVec := promaut
+
 // }
