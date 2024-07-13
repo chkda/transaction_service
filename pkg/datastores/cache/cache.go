@@ -7,7 +7,7 @@ import (
 
 type Payload struct {
 	Key   string
-	Value interface{}
+	Value []byte
 	TTL   time.Duration
 }
 
@@ -16,5 +16,5 @@ type Writer interface {
 }
 
 type Reader interface {
-	Read(context.Context, string) error
+	Read(context.Context, string) ([]byte, error)
 }
