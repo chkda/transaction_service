@@ -60,7 +60,7 @@ func (c *Controller) Handler(e echo.Context) error {
 		response.Message = ErrTransationIdNegativeInteger.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
-	// TODO: Add logic
+
 	ctx := e.Request().Context()
 	err = c.appHandler.AddTransaction(ctx, int32(txnId), &request.Transaction)
 	if err != nil {

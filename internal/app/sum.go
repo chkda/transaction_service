@@ -6,7 +6,6 @@ import (
 	"log"
 	"strconv"
 	"sync"
-	"time"
 
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
 )
@@ -28,6 +27,9 @@ func (h *Handler) GetSumForTxnId(ctx context.Context, txnId int32) (float64, err
 			return cacheableSumForTxnId.Sum, nil
 		}
 	}
+
+	log.Println("[INFO]:app: kv cache miss:key:", txnId)
+
 	sumResult, err := h.dbHandler.FetchSumForTransactionId(ctx, txnId)
 	if err != nil {
 		return -1, err
@@ -36,9 +38,7 @@ func (h *Handler) GetSumForTxnId(ctx context.Context, txnId int32) (float64, err
 	if err != nil {
 		return -1, err
 	}
-	if len(childrenIds) == 0 {
-		return sumResult.Sum, nil
-	}
+
 	sum := sumResult.Sum
 	mu := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
@@ -70,9 +70,9 @@ func (h *Handler) GetSumForTxnId(ctx context.Context, txnId int32) (float64, err
 	kvCachePayload := &cache.Payload{
 		Key:   sumKeyPrefix + strconv.Itoa(int(txnId)),
 		Value: cacheBytes,
-		TTL:   time.Duration(time.Second * 900),
+		TTL:   kvCacheTTL,
 	}
-	go h.kvCache.Write(ctx, kvCachePayload)
+	go h.kvCache.Write(context.Background(), kvCachePayload)
 	return sum, nil
 }
 

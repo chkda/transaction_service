@@ -39,7 +39,7 @@ func (c *Controller) Handler(e echo.Context) error {
 		response.Message = ErrReadingInputType.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
-	// TODO: Add logic
+
 	ctx := e.Request().Context()
 	ids, err := c.appHandler.GetTransactionsWithSameType(ctx, inpType)
 	if err != nil {

@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	"time"
 
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
 )
@@ -42,9 +41,9 @@ func (h *Handler) GetTransactionsWithSameType(ctx context.Context, txnType strin
 	kvCachePayload := &cache.Payload{
 		Key:   typesKeyPrefix + txnType,
 		Value: txnBytes,
-		TTL:   time.Duration(time.Second * 900),
+		TTL:   kvCacheTTL,
 	}
-	go h.kvCache.Write(ctx, kvCachePayload)
+	go h.kvCache.Write(context.Background(), kvCachePayload)
 	return txnIds, nil
 }
 

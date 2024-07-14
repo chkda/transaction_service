@@ -12,6 +12,11 @@ import (
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
 )
 
+const (
+	inMemoryCacheTTL = time.Duration(time.Second * 5)
+	kvCacheTTL       = time.Duration(time.Second * 10)
+)
+
 func (h *Handler) AddTransaction(
 	ctx context.Context,
 	txnId int32,
@@ -66,17 +71,17 @@ func (h *Handler) GetTransaction(ctx context.Context, txnId int32) (*transaction
 	inMemoryCachePayload := &cache.Payload{
 		Key:   strconv.Itoa(int(txnId)),
 		Value: txnBytes,
-		TTL:   time.Duration(time.Second * 300),
+		TTL:   inMemoryCacheTTL,
 	}
-	go h.inMemoryCache.Write(ctx, inMemoryCachePayload)
+	go h.inMemoryCache.Write(context.Background(), inMemoryCachePayload)
 
 	// Setting to distributed kv cache
 	kvCachePayload := &cache.Payload{
 		Key:   strconv.Itoa(int(txnId)),
 		Value: txnBytes,
-		TTL:   time.Duration(time.Second * 900),
+		TTL:   kvCacheTTL,
 	}
-	go h.kvCache.Write(ctx, kvCachePayload)
+	go h.kvCache.Write(context.Background(), kvCachePayload)
 
 	return txn, nil
 }

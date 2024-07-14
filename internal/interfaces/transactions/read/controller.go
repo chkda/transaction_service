@@ -42,7 +42,7 @@ func (c *Controller) Handler(e echo.Context) error {
 		response.Message = ErrMissingTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
-	// TODO: Add Logic
+
 	ctx := e.Request().Context()
 	txnId, err := strconv.Atoi(id)
 	if err != nil {

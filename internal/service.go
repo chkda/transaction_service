@@ -64,7 +64,6 @@ func Start(configFile string) {
 	log.Println("[INFO]:Starting server")
 	serv := echo.New()
 	serv.Use(middleware.Recover())
-	serv.Use(middleware.Logger())
 	serv.GET(healthcheckController.GetRoute(), healthcheckController.Handler)
 	serv.PUT(createTransactionController.GetRoute(), createTransactionController.Handler)
 	serv.GET(readTransactionController.GetRoute(), readTransactionController.Handler)
