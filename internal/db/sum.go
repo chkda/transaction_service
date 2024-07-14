@@ -1,6 +1,8 @@
 package db
 
-import "context"
+import (
+	"context"
+)
 
 type SumResult struct {
 	Id  int32   `db:"Id"`
@@ -8,9 +10,9 @@ type SumResult struct {
 }
 
 func (h *Handler) FetchSumForTransactionId(ctx context.Context, id int32) (*SumResult, error) {
-	query := "SELECT Id, SUM(Amount) AS SUM FROM " + TRANSACTION_TABLE + " WHERE Id IN (?) "
+	query := "SELECT Id, SUM(Amount) AS Sum FROM " + TRANSACTION_TABLE + " WHERE Id IN (?) GROUP BY Id"
 	args := []interface{}{id}
-	rows, err := h.readerWriter.Read(ctx, query, args)
+	rows, err := h.readerWriter.Read(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}

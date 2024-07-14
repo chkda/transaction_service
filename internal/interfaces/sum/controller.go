@@ -14,7 +14,10 @@ const (
 )
 
 var (
-	ErrReadingInputId = errors.New("unable to read input id")
+	ErrMissingTransactionId        = errors.New("transaction id missing in url path")
+	ErrTransationIdNotInteger      = errors.New("transaction id not integer")
+	ErrTransationIdNegativeInteger = errors.New("transaction id is negative integer")
+	ErrFetchingSumForTransactionId = errors.New("failed to fetch sum")
 )
 
 type Controller struct {
@@ -35,19 +38,23 @@ func (c *Controller) Handler(e echo.Context) error {
 	parentId := e.Param("id")
 	response := &Response{}
 	if parentId == "" {
-		response.Message = ErrReadingInputId.Error()
+		response.Message = ErrMissingTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	// TODO: Add logic
 	txnId, err := strconv.Atoi(parentId)
 	if err != nil {
-		response.Message = ErrReadingInputId.Error()
+		response.Message = ErrTransationIdNotInteger.Error()
+		return e.JSON(http.StatusBadRequest, response)
+	}
+	if txnId < 0 {
+		response.Message = ErrTransationIdNegativeInteger.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	ctx := e.Request().Context()
 	sum, err := c.appHandler.GetSumForTxnId(ctx, int32(txnId))
 	if err != nil {
-		response.Message = err.Error()
+		response.Message = ErrFetchingSumForTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	response.Sum = &sum

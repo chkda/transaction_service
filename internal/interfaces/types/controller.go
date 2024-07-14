@@ -13,8 +13,8 @@ const (
 )
 
 var (
-	ErrReadingInputType       = errors.New("unable to read input type")
-	ErrTransactionsIdsForType = errors.New("unable to fetch txn ids")
+	ErrReadingInputType               = errors.New("unable to read input type")
+	ErrFetchingTransactionsIdsForType = errors.New("unable to fetch txn ids")
 )
 
 type Controller struct {
@@ -42,7 +42,7 @@ func (c *Controller) Handler(e echo.Context) error {
 	ctx := e.Request().Context()
 	ids, err := c.appHandler.GetTransactionsWithSameType(ctx, inpType)
 	if err != nil {
-		response.Message = ErrTransactionsIdsForType.Error()
+		response.Message = ErrFetchingTransactionsIdsForType.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	response.Ids = ids
