@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
@@ -39,16 +40,26 @@ func (h *Handler) GetSumForTxnId(ctx context.Context, txnId int32) (float64, err
 		return sumResult.Sum, nil
 	}
 	sum := sumResult.Sum
+	mu := &sync.Mutex{}
+	wg := &sync.WaitGroup{}
 	for _, childId := range childrenIds {
 		// TODO: Add go routines line 37-43
-		childSum, err := h.GetSumForTxnId(ctx, childId)
-		if err != nil {
-			// TODO: Add logger
-			fmt.Println(err)
-			continue
-		}
-		sum += childSum
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			childSum, err := h.GetSumForTxnId(context.Background(), childId)
+			if err != nil {
+				// TODO: Add logger
+				fmt.Println(err)
+				// continue
+				return
+			}
+			mu.Lock()
+			defer mu.Unlock()
+			sum += childSum
+		}()
 	}
+	wg.Wait()
 	cacheableSumForTxnId := &CacheableSumForTxnId{
 		TxnId: txnId,
 		Sum:   sum,
