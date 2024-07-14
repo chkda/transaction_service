@@ -12,3 +12,27 @@ The project is organized into several directories, each with a specific purpose:
 - **`/pkg`**: Shared libraries and utilities used across services.
 - **`/config`**: Configuration files and environment specifics.
 - **`tables.sql`**: To build  database and  table for mysql.
+
+## Getting Started
+
+### Prerequisites
+
+- Go 1.17 or higher
+- Docker (optional - for redis and mysql)
+
+### Setting Up Your Local Development Environment
+
+1. Clone the repository:
+
+2. Install dependencies:
+    ```bash
+    go mod tidy
+    ```
+
+3. Set up datastores:
+    ```bash
+    docker run --rm -d --name loco-mysql -v loco_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root1234 -p 3306:3306 mysql
+    
+4. Create the necessary tables
+
+5. Run `go run cmd/main.go` 
