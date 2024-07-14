@@ -9,7 +9,7 @@ The project is organized into several directories, each with a specific purpose:
     - `/app`        Application business rules (core logic).
     - `/db`      Interactions with database.
     - `/interfaces`  Interfaces (HTTP handlers) for consumption.
-- **`/pkg`**: Shared libraries and utilities used across services.
+- **`/pkg`**: Shared libraries and utilities.
 - **`/config`**: Configuration files and environment specifics.
 - **`tables.sql`**: To build  database and  table for mysql.
 
