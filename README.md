@@ -31,7 +31,10 @@ The project is organized into several directories, each with a specific purpose:
 
 3. Set up datastores:
     ```bash
+    docker volume create loco_db
     docker run --rm -d --name loco-mysql -v loco_db:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root1234 -p 3306:3306 mysql
+    docker run --rm -p 6379:6379 redis
+    ```
     
 4. Create the necessary tables
 
