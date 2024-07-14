@@ -7,20 +7,20 @@ import (
 )
 
 type TransactionRow struct {
-	Id       int32   `db:"id"`
-	Type     string  `db:"type"`
-	Amount   float64 `db:"amount"`
-	ParentId *int32  `db:"parent_id"`
+	Id       int32   `db:"Id"`
+	Type     string  `db:"Types"`
+	Amount   float64 `db:"Amount"`
+	ParentId *int32  `db:"ParentId"`
 }
 
 const (
-	TRANSACTION_TABLE = "transactions"
+	TRANSACTION_TABLE = "loco.transactions"
 )
 
 var columns = []string{
 	"Id",
 	"Amount",
-	"Type",
+	"Types",
 	"ParentId",
 }
 

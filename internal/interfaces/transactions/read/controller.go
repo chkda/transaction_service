@@ -14,7 +14,10 @@ const (
 )
 
 var (
-	ErrReadingInputId = errors.New("unable to read input id")
+	ErrMissingTransactionId        = errors.New("transaction id missing in url path")
+	ErrTransactionReadFailue       = errors.New("failed to read transaction")
+	ErrTransationIdNotInteger      = errors.New("transaction id not integer")
+	ErrTransationIdNegativeInteger = errors.New("transaction id is negative integer")
 )
 
 type Controller struct {
@@ -35,19 +38,23 @@ func (c *Controller) Handler(e echo.Context) error {
 	id := e.Param("id")
 	response := &Response{}
 	if id == "" {
-		response.Message = ErrReadingInputId.Error()
+		response.Message = ErrMissingTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	// TODO: Add Logic
 	ctx := e.Request().Context()
 	txnId, err := strconv.Atoi(id)
 	if err != nil {
-		response.Message = ErrReadingInputId.Error()
+		response.Message = ErrTransationIdNotInteger.Error()
+		return e.JSON(http.StatusBadRequest, response)
+	}
+	if txnId < 0 {
+		response.Message = ErrTransationIdNegativeInteger.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	txn, err := c.appHandler.GetTransaction(ctx, int32(txnId))
 	if err != nil {
-		response.Message = err.Error()
+		response.Message = ErrTransactionReadFailue.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
 	response.Transaction = txn
