@@ -39,3 +39,30 @@ The project is organized into several directories, each with a specific purpose:
 4. Create the necessary tables
 
 5. Run `go run cmd/main.go` 
+
+### cURL for the respective APIs
+
+1. Add transaction
+    ```bash
+    curl --location --request PUT 'localhost:8000/transactions/16' \
+    --header 'Content-Type: application/json' \
+    --data '{
+            "amount": 25000,
+            "type": "bike"
+        }'
+    ```
+
+2. Get transaction
+    ```bash
+    curl --location 'localhost:8000/transactions/14'
+    ```
+
+3. Get transaction id based on types
+    ```bash
+    curl --location 'localhost:8000/types/bike'
+    ```
+
+4. Get sum for a transaction id
+    ```bash
+    curl --location 'localhost:8000/sum/10'
+    ```
