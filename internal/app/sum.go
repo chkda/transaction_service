@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"encoding/json"
-	"fmt"
+	"log"
 	"strconv"
 	"sync"
 	"time"
@@ -43,15 +43,12 @@ func (h *Handler) GetSumForTxnId(ctx context.Context, txnId int32) (float64, err
 	mu := &sync.Mutex{}
 	wg := &sync.WaitGroup{}
 	for _, childId := range childrenIds {
-		// TODO: Add go routines line 37-43
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			childSum, err := h.GetSumForTxnId(context.Background(), childId)
 			if err != nil {
-				// TODO: Add logger
-				fmt.Println(err)
-				// continue
+				log.Println("[ERROR]:app:" + err.Error())
 				return
 			}
 			mu.Lock()

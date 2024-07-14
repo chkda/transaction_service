@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"strings"
 )
 
@@ -70,8 +70,7 @@ func (h *Handler) FetchTransactionIds(ctx context.Context, txnType string) ([]in
 		txn := &TransactionRow{}
 		err := rows.StructScan(txn)
 		if err != nil {
-			// TODO : Add logger instead of print
-			fmt.Println(err)
+			log.Println("[ERROR]:db:struct unmarshalling error:", txnType)
 			continue
 		}
 		txnIds = append(txnIds, txn.Id)

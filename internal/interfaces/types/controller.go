@@ -2,6 +2,7 @@ package types
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/chkda/transaction_service/internal/app"
@@ -42,6 +43,7 @@ func (c *Controller) Handler(e echo.Context) error {
 	ctx := e.Request().Context()
 	ids, err := c.appHandler.GetTransactionsWithSameType(ctx, inpType)
 	if err != nil {
+		log.Println("[ERROR]:interfaces:types:", err.Error())
 		response.Message = ErrFetchingTransactionsIdsForType.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}

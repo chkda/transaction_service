@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"fmt"
+	"log"
 )
 
 func (h *Handler) FetchChildrenIds(ctx context.Context, parentId int32) ([]int32, error) {
@@ -17,8 +17,7 @@ func (h *Handler) FetchChildrenIds(ctx context.Context, parentId int32) ([]int32
 		txn := &TransactionRow{}
 		err := rows.StructScan(txn)
 		if err != nil {
-			// TODO: Add logger
-			fmt.Println(err)
+			log.Println("[ERROR]:db:struct unmarshalling error:", parentId)
 			continue
 		}
 		txnIds = append(txnIds, txn.Id)

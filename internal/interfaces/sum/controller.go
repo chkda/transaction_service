@@ -2,6 +2,7 @@ package sum
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -41,7 +42,7 @@ func (c *Controller) Handler(e echo.Context) error {
 		response.Message = ErrMissingTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
-	// TODO: Add logic
+
 	txnId, err := strconv.Atoi(parentId)
 	if err != nil {
 		response.Message = ErrTransationIdNotInteger.Error()
@@ -54,6 +55,7 @@ func (c *Controller) Handler(e echo.Context) error {
 	ctx := e.Request().Context()
 	sum, err := c.appHandler.GetSumForTxnId(ctx, int32(txnId))
 	if err != nil {
+		log.Println("[ERROR]:interfaces:sum:", err.Error())
 		response.Message = ErrFetchingSumForTransactionId.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}

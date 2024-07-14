@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"strconv"
 	"time"
 
@@ -35,7 +36,7 @@ func (h *Handler) GetTransaction(ctx context.Context, txnId int32) (*transaction
 		}
 	}
 
-	// TODO: Add logger for cache miss
+	log.Println("[INFO]:app: inmemory cache miss:key:", txnId)
 
 	txnBytes, err = h.kvCache.Read(ctx, strconv.Itoa(int(txnId)))
 	if err == nil {
@@ -45,7 +46,8 @@ func (h *Handler) GetTransaction(ctx context.Context, txnId int32) (*transaction
 		}
 	}
 
-	// TODO: Add logger for cache miss
+	log.Println("[INFO]:app: kv cache miss:key:", txnId)
+
 	txnRow, err := h.dbHandler.FetchTransaction(ctx, txnId)
 	if err != nil {
 		return nil, err

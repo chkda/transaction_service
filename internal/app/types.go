@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"encoding/json"
+	"log"
 	"time"
 
 	"github.com/chkda/transaction_service/pkg/datastores/cache"
@@ -24,6 +25,8 @@ func (h *Handler) GetTransactionsWithSameType(ctx context.Context, txnType strin
 			return txnIds.Ids, nil
 		}
 	}
+
+	log.Println("[INFO]:app: kv cache miss:key:", txnType)
 
 	txnIds, err := h.dbHandler.FetchTransactionIds(ctx, txnType)
 	if err != nil {

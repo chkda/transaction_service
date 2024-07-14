@@ -2,7 +2,7 @@ package create
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -64,7 +64,7 @@ func (c *Controller) Handler(e echo.Context) error {
 	ctx := e.Request().Context()
 	err = c.appHandler.AddTransaction(ctx, int32(txnId), &request.Transaction)
 	if err != nil {
-		fmt.Println(err)
+		log.Println("[ERROR]:interfaces:transactions:create:", err.Error())
 		response.Status = "failed"
 		response.Message = ErrTransactionCreationFailue.Error()
 		return e.JSON(http.StatusBadRequest, response)

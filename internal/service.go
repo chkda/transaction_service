@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"os"
 
 	"github.com/chkda/transaction_service/internal/app"
@@ -59,7 +60,7 @@ func Start(configFile string) {
 	readTransactionController := read.New(appHandler)
 	sumController := sum.New(appHandler)
 	typesController := typ.New(appHandler)
-
+	log.Println("[INFO]:Starting server")
 	serv := echo.New()
 	serv.GET(healthcheckController.GetRoute(), healthcheckController.Handler)
 	serv.PUT(createTransactionController.GetRoute(), createTransactionController.Handler)

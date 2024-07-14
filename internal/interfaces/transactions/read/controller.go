@@ -2,6 +2,7 @@ package read
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -54,6 +55,7 @@ func (c *Controller) Handler(e echo.Context) error {
 	}
 	txn, err := c.appHandler.GetTransaction(ctx, int32(txnId))
 	if err != nil {
+		log.Println("[ERROR]:interfaces:transactions:read:", err.Error())
 		response.Message = ErrTransactionReadFailue.Error()
 		return e.JSON(http.StatusBadRequest, response)
 	}
