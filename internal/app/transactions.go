@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	inMemoryCacheTTL = time.Duration(time.Second * 5)
-	kvCacheTTL       = time.Duration(time.Second * 10)
+	inMemoryCacheTTL = time.Duration(time.Second * 30)
+	kvCacheTTL       = time.Duration(time.Second * 60)
 )
 
 func (h *Handler) AddTransaction(

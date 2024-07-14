@@ -66,3 +66,5 @@ The project is organized into several directories, each with a specific purpose:
     ```bash
     curl --location 'localhost:8000/sum/10'
     ```
+
+Please note in case you see some stale values it might be coming from the cache. All the apis have cache integrated with it. InMemory cache has ttl of 30s and Redis cache has ttl of 60s.
