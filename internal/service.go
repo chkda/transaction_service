@@ -17,6 +17,7 @@ import (
 	"github.com/chkda/transaction_service/pkg/datastores/database/mysqlstore"
 	"github.com/chkda/transaction_service/pkg/metrics/prometheus"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type Config struct {
@@ -62,6 +63,8 @@ func Start(configFile string) {
 	typesController := typ.New(appHandler)
 	log.Println("[INFO]:Starting server")
 	serv := echo.New()
+	serv.Use(middleware.Recover())
+	serv.Use(middleware.Logger())
 	serv.GET(healthcheckController.GetRoute(), healthcheckController.Handler)
 	serv.PUT(createTransactionController.GetRoute(), createTransactionController.Handler)
 	serv.GET(readTransactionController.GetRoute(), readTransactionController.Handler)
