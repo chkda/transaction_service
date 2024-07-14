@@ -15,16 +15,14 @@ import (
 	badgercache "github.com/chkda/transaction_service/pkg/datastores/cache/badger"
 	rediscache "github.com/chkda/transaction_service/pkg/datastores/cache/redis"
 	"github.com/chkda/transaction_service/pkg/datastores/database/mysqlstore"
-	"github.com/chkda/transaction_service/pkg/metrics/prometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 type Config struct {
-	HTTPPort         string             `json:"http_port"`
-	RedisConfig      *rediscache.Config `json:"redis"`
-	MySQLConfig      *mysqlstore.Config `json:"mysql"`
-	PrometheusConfig *prometheus.Config `json:"prometheus"`
+	HTTPPort    string             `json:"http_port"`
+	RedisConfig *rediscache.Config `json:"redis"`
+	MySQLConfig *mysqlstore.Config `json:"mysql"`
 }
 
 func Start(configFile string) {
