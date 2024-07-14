@@ -60,9 +60,8 @@ func (h *Handler) FetchTransaction(ctx context.Context, id int32) (*TransactionR
 }
 
 func (h *Handler) FetchTransactionIds(ctx context.Context, txnType string) ([]int32, error) {
-	query := "SELECT * FROM " + TRANSACTION_TABLE + " WHERE Type IN (?) "
-	args := []interface{}{txnType}
-	rows, err := h.readerWriter.Read(ctx, query, args)
+	query := "SELECT * FROM " + TRANSACTION_TABLE + " WHERE Types IN ('" + txnType + "')"
+	rows, err := h.readerWriter.Read(ctx, query)
 	if err != nil {
 		return nil, err
 	}
